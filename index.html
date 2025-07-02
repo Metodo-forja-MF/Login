@@ -11,17 +11,50 @@
   <div class="overlay">
     <div class="login-box">
       <h1>Método FORJA</h1>
-      <form>
-        <input type="text" placeholder="Usuário" required />
-        <input type="password" placeholder="Senha" required />
+      <form onsubmit="login(event)">
+        <input type="email" id="email" placeholder="Email" required />
+        <input type="password" id="password" placeholder="Senha" required />
         <button type="submit">Entrar</button>
       </form>
     </div>
   </div>
 
-  <!-- Scripts -->
+  <!-- Scripts de partículas e fumaça -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <script src="particles-config.js"></script>
   <script src="smoke.js"></script>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBKtKrRP4AjLHcdeEdyTlTZC9hHdv5y7no",
+      authDomain: "metodo-forja.firebaseapp.com",
+      projectId: "metodo-forja",
+      storageBucket: "metodo-forja.firebasestorage.app",
+      messagingSenderId: "949719386034",
+      appId: "1:949719386034:web:5c015b5fbe082821ea86ab",
+      measurementId: "G-6Z9EJLY5LZ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    window.login = function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          window.location.href = "../modulos/index.html"; // Redirecione conforme necessário
+        })
+        .catch((error) => {
+          alert("Erro ao entrar: " + error.message);
+        });
+    };
+  </script>
 </body>
 </html>
